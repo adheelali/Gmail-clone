@@ -2,6 +2,8 @@ import React from "react";
 import "./sidebarOptions.css";
 
 function SidebarOptions({ Icon, title, number, selected }) {
+
+
   return (
     <div className={`sidebarOptions ${selected && 'sidebarOption--active'}`}>
       <Icon />

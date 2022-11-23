@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./sidebar.css";
 import SidebarOptions from "./components/SidebarOptions";
 import { Button } from "@mui/material";
@@ -10,8 +10,12 @@ import { LabelImportant } from "@mui/icons-material";
 import { NearMe } from "@mui/icons-material";
 import { Note } from "@mui/icons-material";
 import { ExpandMore } from "@mui/icons-material";
+import AddIcon from "@mui/icons-material/Add";
 
 function Sidebar() {
+  const [selected, setSelected] = useState(true)
+  
+
   return (
     <div className="sidebar">
       <Button
@@ -22,13 +26,48 @@ function Sidebar() {
       >
         Compose
       </Button>
-      <SidebarOptions Icon={Inbox} title="Inbox" number={54} selected={true} />
-      <SidebarOptions Icon={Star} title="Starred" number={54} />
-      <SidebarOptions Icon={AccessTime} title="Snoozed" number={54} />
-      <SidebarOptions Icon={LabelImportant} title="Important" number={54} />
-      <SidebarOptions Icon={NearMe} title="Sent" number={54} />
-      <SidebarOptions Icon={Note} title="Drafts" number={54} />
-      <SidebarOptions Icon={ExpandMore} title="More" number={54} />
+      <SidebarOptions
+        Icon={Inbox}
+        title="Inbox"
+        number={54}
+        selected={selected}
+      />
+      <SidebarOptions
+        Icon={Star}
+        title="Starred"
+        number={54}
+      />
+      <SidebarOptions
+        Icon={AccessTime}
+        title="Snoozed"
+        number={54}
+      />
+      <SidebarOptions
+        Icon={LabelImportant}
+        title="Important"
+        number={54}
+      />
+      <SidebarOptions
+        Icon={NearMe}
+        title="Sent"
+        number={54}
+      />
+      <SidebarOptions
+        Icon={Note}
+        title="Drafts"
+        number={54}
+      />
+      <SidebarOptions
+        Icon={ExpandMore}
+        title="More"
+        number={54}
+      />
+      <div className="sidebar__footer">
+        <h4>Labels</h4>
+        <Button>
+          <AddIcon />
+        </Button>
+      </div>
     </div>
   );
 }
