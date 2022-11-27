@@ -4,7 +4,7 @@ import "./Section.css";
 function Section({ Icon, title, color, selected }) {
   return (
     <div
-      classname={`section ${selected && "section--selected"} `}
+      className={`section ${selected && "section--selected"} `}
       style={{
         borderBottom: `3px solid ${color}`,
         color: `${selected && color}`,

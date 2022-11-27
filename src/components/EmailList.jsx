@@ -6,6 +6,7 @@ import Section from './UI/Section'
 import Inbox from '@mui/icons-material/Inbox'
 import { People } from '@mui/icons-material'
 import { LocalOffer } from '@mui/icons-material'
+import EmailRow from './UI/EmailRow'
 
 function EmailList() {
   return (
@@ -36,6 +37,20 @@ function EmailList() {
         <Section Icon={Inbox} title="Primary" color="red" selected />
         <Section Icon={People} title="Social" color="#1A73E8" />
         <Section Icon={LocalOffer} title="Promotions" color="green" />
+      </div>
+      <div className="emailList__list">
+        <EmailRow 
+          title='twitch'
+          subject='heuuudndf fellow'
+          description='tessrt js'
+          time='10pm'
+        />
+        <EmailRow 
+          title='twitch'
+          subject='heuuudndf fellow'
+          description='tessrt js'
+          time='10pm'
+        />
       </div>
     </div>
   )
