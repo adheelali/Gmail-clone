@@ -12,10 +12,7 @@ import { Note } from "@mui/icons-material";
 import { ExpandMore } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
 
-function Sidebar() {
-  const [selected, setSelected] = useState(true)
-  
-
+function Sidebar() {  
   return (
     <div className="sidebar">
       <Button
@@ -30,7 +27,6 @@ function Sidebar() {
         Icon={Inbox}
         title="Inbox"
         number={54}
-        selected={selected}
       />
       <SidebarOptions
         Icon={Star}

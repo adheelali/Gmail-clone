@@ -4,6 +4,7 @@ header {
     justify-content: space-between;
     border-bottom: 1px solid whitesmoke;
     padding: 0 1rem;
+    background-color: whitesmoke;
 }
 
 .header__left {
@@ -22,9 +23,9 @@ header {
   display: flex;
   align-items: center;
   flex: 0.7;
-  background-color: whitesmoke;
+  background-color: white;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .header__middle > .MuiSvgIcon-root {

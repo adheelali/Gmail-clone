@@ -1,6 +1,8 @@
 .emailList {
   flex: 1;
   overflow: scroll;
+  background-color: white;
+  border-radius: 10px;
 }
 
 .emailList__settings {
@@ -12,6 +14,7 @@
   border-bottom: 1px solid whitesmoke;
   background-color: #fff;
   z-index: 999;
+  padding: 5px 0 0 5px;
 }
 
 .emailList__sections {
