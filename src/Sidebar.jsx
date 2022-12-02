@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./sidebar.css";
 import SidebarOptions from "./components/SidebarOptions";
 import { Button } from "@mui/material";
@@ -11,8 +11,12 @@ import { NearMe } from "@mui/icons-material";
 import { Note } from "@mui/icons-material";
 import { ExpandMore } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
+import { useDispatch } from "react-redux";
+import { openSendMessage } from "./features/mailSlice";
 
 function Sidebar() {  
+  const dispatch = useDispatch()
+
   return (
     <div className="sidebar">
       <Button
@@ -20,6 +24,7 @@ function Sidebar() {
         startIcon={
           <ModeEditOutlineOutlinedIcon style={{ fontSize: "large" }} />
         }
+        onClick={() => {dispatch(openSendMessage())}}
       >
         Compose
       </Button>

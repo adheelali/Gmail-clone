@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import Radium from 'radium';
 import "./Section.css";
 
 function Section({ Icon, title, color }) {
@@ -16,10 +15,6 @@ function Section({ Icon, title, color }) {
     section.current.style.color = color;
   };
 
-  const styles={
-    borderBottom: `3px solid ${color}`,
-  }
-
   useEffect(() => {
     if (title == "Primary") {
       section.current.classList += " section--selected";
@@ -32,7 +27,9 @@ function Section({ Icon, title, color }) {
       ref={section}
       onClick={classSwitch}
       className={"section"}
-      style={styles}
+      style={{
+        borderBottom: `3px solid ${color}`,
+      }}
     >
       <Icon />
       <h4>{title}</h4>
@@ -40,5 +37,4 @@ function Section({ Icon, title, color }) {
   );
 }
 
-export default Radium(Section);
-
+export default Section;
