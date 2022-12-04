@@ -1,21 +1,32 @@
+import React, { useEffect } from "react";
+import "./sendmail.css";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "./firebase/init";
 import { Close } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import React from "react";
-import "./sendmail.css";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { closeSendMessage } from "./features/mailSlice";
 
 function SendMail() {
   const dispatch = useDispatch();
-
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  function onSubmit(fromData) {}
+
+  const onSubmit = async(formData) => {
+    const docRef = await addDoc(collection(db, "emails"), {
+      To: formData.To,
+      subject: formData.Subject,
+      message: formData.Message,
+      timestamp: serverTimestamp(),
+    });
+    console.log(docRef.id)
+    dispatch(closeSendMessage())
+  };
 
   return (
     <div className="sendMail">
@@ -31,7 +42,7 @@ function SendMail() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           {...register("To", { required: true })}
-          type="text"
+          type="email"
           placeholder="To"
         />
         {errors.To && (

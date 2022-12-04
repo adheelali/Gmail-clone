@@ -1,16 +1,46 @@
-import { ArrowDropDown, ChevronLeft, ChevronRight, MoreVert, Redo } from '@mui/icons-material'
-import { Checkbox, IconButton } from '@mui/material'
-import React from 'react'
-import './emailList.css'
-import Section from './UI/Section'
-import Inbox from '@mui/icons-material/Inbox'
-import { People } from '@mui/icons-material'
-import { LocalOffer } from '@mui/icons-material'
-import EmailRow from './UI/EmailRow'
+import {
+  ArrowDropDown,
+  ChevronLeft,
+  ChevronRight,
+  MoreVert,
+  Redo,
+} from "@mui/icons-material";
+import { Checkbox, IconButton } from "@mui/material";
+import React, { useEffect } from "react";
+import "./emailList.css";
+import Section from "./UI/Section";
+import Inbox from "@mui/icons-material/Inbox";
+import { People } from "@mui/icons-material";
+import { LocalOffer } from "@mui/icons-material";
+import EmailRow from "./UI/EmailRow";
+import { useState } from "react";
+import { db } from "../firebase/init";
+import {
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  onSnapshot,
+} from "firebase/firestore";
 
 function EmailList() {
+  const [emails, setEmails] = useState([]);
+
+  useEffect(() => {
+    async function getAllEmails() {
+      getDocs(collection(db, "emails"))
+        .orderBy("timestamp", "desc")
+        .onSnapshot((docSnapShot) => {
+          docSnapShot.forEach((docs) =>
+            setEmails(docs.map((elem) => ({ ...elem.data(), id: elem.id })))
+          );
+        });
+    }
+    getAllEmails();
+  }, []);
+
   return (
-    <div className='emailList'>
+    <div className="emailList">
       <div className="emailList__settings">
         <div className="emailList__settingsLeft">
           <Checkbox />
@@ -21,7 +51,7 @@ function EmailList() {
             <Redo />
           </IconButton>
           <IconButton>
-            <MoreVert/>
+            <MoreVert />
           </IconButton>
         </div>
         <div className="emailList__settingsRight">
@@ -39,22 +69,31 @@ function EmailList() {
         <Section Icon={LocalOffer} title="Promotions" color="green" />
       </div>
       <div className="emailList__list">
-        <EmailRow 
-          title='twitch'
-          subject='heuuudndf fellow'
-          description='tessrt js'
-          time='10pm'
+        {/* {emails.map(({ id, data }) => {
+          <EmailRow 
+          id={id}
+          key={id}
+          title={data.To}
+
+
+
+          />
+        })} */}
+        <EmailRow
+          title="twitch"
+          subject="heuuudndf fellow"
+          description="tessrt js"
+          time="10pm"
         />
-        <EmailRow 
-          title='twitch'
-          subject='heuuudndf fellow'
-          description='tessrt js'
-          time='10pm'
+        <EmailRow
+          title="twitch"
+          subject="heuuudndf fellow"
+          description="tessrt js"
+          time="10pm"
         />
       </div>
     </div>
-  )
+  );
 }
 
-
-export default EmailList
+export default EmailList;
