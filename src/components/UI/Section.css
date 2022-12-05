@@ -10,7 +10,6 @@
 
 .section:hover {
   background-color: whitesmoke;
-  border-width: 3px !important;
 }
 
 .section--selected {
