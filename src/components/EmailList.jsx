@@ -26,12 +26,29 @@ import {
 function EmailList() {
   const [emails, setEmails] = useState([]);
 
+  // useEffect(() => {
+  //   async function getAllEmails() {
+  //       const { docs } = await getDocs(collection(db, "emails"));
+  //       const email = docs.map((elem) => ({ ...elem.data(), id: elem.id }));
+  //       setEmails(email);
+  //       console.log(email);
+  //   }
+  //   getAllEmails();
+  //   console.log(emails)
+  // }, []);
+
   useEffect(() => {
     async function getAllEmails() {
-      const { docs } = await getDocs(collection(db, "emails"));
-      const email = docs.map((elem) => ({ ...elem.data(), id: elem.id }));
-      setEmails(email);
-      console.log(email);
+      const emailRef = await getDocs(collection(db, "emails"));
+      const q = query(emailRef, orderBy("timestamp", "desc"));
+      const emailData = onSnapshot(q, (querySnapshot) => {
+        const email = [];
+        querySnapshot.forEach((doc) => {
+          email.push(doc.data());
+        });
+        return email
+      });
+      setEmails(emailData);
     }
     getAllEmails();
   }, []);
@@ -66,46 +83,19 @@ function EmailList() {
         <Section Icon={LocalOffer} title="Promotions" color="green" />
       </div>
       <div className="emailList__list">
-        {emails?.map(({ id, To, subject, description, timestamp }) => {
+        {emails?.map(({ id, To, subject, description, timestamp }) => (
           <EmailRow
             id={id}
             key={id}
             title={To}
             subject={subject}
             description={description}
-            time={new Date(timestamp?.seconds * 1000).toUTCString()}
-          />;
-        })}
-
-        <EmailRow
-          title="twitch"
-          subject="heuuudndf fellow"
-          description="tessrt js"
-          time="10pm"
-        />
-        <EmailRow
-          title="twitch"
-          subject="heuuudndf fellow"
-          description="tessrt js"
-          time="10pm"
-        />
+            time="10px"
+          />
+        ))}
       </div>
     </div>
   );
 }
 
 export default EmailList;
-
-
-  // useEffect(() => {
-  //   async function getAllEmails() {
-  //     getDocs(collection(db, "emails"))
-  //       .orderBy("timestamp", "desc")
-  //       .onSnapshot((docSnapShot) => {
-  //         docSnapShot.forEach((docs) =>
-  //           setEmails(docs.map((elem) => ({ ...elem.data(), id: elem.id })))
-  //         );
-  //       });
-  //   }
-  //   getAllEmails();
-  // }, []);
