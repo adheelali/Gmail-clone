@@ -33,8 +33,7 @@
 .emailRow__message > h4 {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 0 5px;
+  padding: 0 5px 0 10px;
 }
 
 .emailRow__title {
@@ -52,4 +51,6 @@
 .emailRow__description {
   font-weight: 400;
   color: grey;
+  overflow: hidden;
+  padding-left: 2px;
 }

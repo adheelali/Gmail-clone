@@ -16,39 +16,29 @@ import EmailRow from "./UI/EmailRow";
 import { useState } from "react";
 import { db } from "../firebase/init";
 import {
-  collection,
   getDocs,
+  collection,
   orderBy,
   query,
-  onSnapshot,
 } from "firebase/firestore";
 
 function EmailList() {
   const [emails, setEmails] = useState([]);
 
-  // useEffect(() => {
-  //   async function getAllEmails() {
-  //       const { docs } = await getDocs(collection(db, "emails"));
-  //       const email = docs.map((elem) => ({ ...elem.data(), id: elem.id }));
-  //       setEmails(email);
-  //       console.log(email);
-  //   }
-  //   getAllEmails();
-  //   console.log(emails)
-  // }, []);
-
   useEffect(() => {
     async function getAllEmails() {
-      const emailRef = await getDocs(collection(db, "emails"));
+      const emailRef = collection(db, "emails");
       const q = query(emailRef, orderBy("timestamp", "desc"));
-      const emailData = onSnapshot(q, (querySnapshot) => {
-        const email = [];
-        querySnapshot.forEach((doc) => {
-          email.push(doc.data());
+      const querySnapshot = await getDocs(q);
+      const email = [];
+      querySnapshot.forEach((doc) => {
+        email.push({
+          ...doc.data(),
+          id: doc.id,
         });
-        return email
       });
-      setEmails(emailData);
+      setEmails(email);
+      console.log(email)
     }
     getAllEmails();
   }, []);
@@ -83,14 +73,14 @@ function EmailList() {
         <Section Icon={LocalOffer} title="Promotions" color="green" />
       </div>
       <div className="emailList__list">
-        {emails?.map(({ id, To, subject, description, timestamp }) => (
+        {emails?.map(({ id, To, subject, message, timestamp }) => (
           <EmailRow
             id={id}
             key={id}
             title={To}
             subject={subject}
-            description={description}
-            time="10px"
+            message={message}
+            time={new Date(timestamp?.seconds * 1000).toUTCString()}
           />
         ))}
       </div>
