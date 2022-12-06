@@ -22,6 +22,7 @@ import { SelectOpenMail } from "../features/mailSlice";
 function Mail() {
   const navigate = useNavigate();
   const selectedMail = useSelector(SelectOpenMail) 
+  console.log(selectedMail)
 
   return (
     <div className="mail">
