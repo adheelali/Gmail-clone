@@ -13,7 +13,7 @@ import { selectMail } from "../../features/mailSlice";
 function MailRow({ id, title, subject, message, time }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+ 
   const openMail = () => {
     dispatch(
       selectMail({
@@ -29,19 +29,21 @@ function MailRow({ id, title, subject, message, time }) {
 
   return (
     <div className="emailRow" onClick={openMail}>
-      <div className="emailRow__options">
-        <CheckBox />
-        <IconButton>
-          <StarBorderOutlined />
-        </IconButton>
-        <IconButton>
-          <LabelImportantOutlined />
-        </IconButton>
-      </div>
-      <h3 className="emailRow__title">{title}</h3>
-      <div className="emailRow__message">
-        <h4>{subject} </h4>
-        <span className="emailRow__description">- {message}</span>
+      <div className="emailRow__divider">
+        <div className="emailRow__options">
+          <CheckBox />
+          <IconButton>
+            <StarBorderOutlined />
+          </IconButton>
+          <IconButton>
+            <LabelImportantOutlined />
+          </IconButton>
+        </div>
+        <h3 className="emailRow__title">{title}</h3>
+        <div className="emailRow__message">
+          <h4>{subject} </h4>
+          <span className="emailRow__description">- {message}</span>
+        </div>
       </div>
       <div className="emailRow__time">{time}</div>
     </div>

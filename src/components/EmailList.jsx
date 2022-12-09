@@ -6,24 +6,22 @@ import {
   Redo,
 } from "@mui/icons-material";
 import { Checkbox, IconButton } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./emailList.css";
 import Section from "./UI/Section";
 import Inbox from "@mui/icons-material/Inbox";
 import { People } from "@mui/icons-material";
 import { LocalOffer } from "@mui/icons-material";
 import EmailRow from "./UI/EmailRow";
-import { useState } from "react";
+
 import { db } from "../firebase/init";
-import {
-  getDocs,
-  collection,
-  orderBy,
-  query,
-} from "firebase/firestore";
+import { getDocs, collection, orderBy, query } from "firebase/firestore";
+
+//how to scroll the overflowing y-axis without the website scrolling   change this code to react
 
 function EmailList() {
   const [emails, setEmails] = useState([]);
+  const elementRef = useRef(null);
 
   useEffect(() => {
     async function getAllEmails() {
@@ -38,10 +36,33 @@ function EmailList() {
         });
       });
       setEmails(email);
-      console.log(email)
+      console.log(email);
     }
     getAllEmails();
+
+    // Get the element from the ref
+    const element = elementRef.current;
+
+    // Set the overflow-y property to scroll
+    element.style.overflowY = "scroll";
+
+    // Add an event listener for the mousewheel event
+    element.addEventListener("mousewheel", handleMouseWheel);
+
+    // Return a cleanup function to remove the event listener
+    return () => element.removeEventListener("mousewheel", handleMouseWheel);
   }, []);
+
+  function handleMouseWheel(event) {
+    // Prevent the default scroll behavior of the page
+    event.preventDefault();
+
+    // Get the current scroll position of the element
+    const scrollTop = elementRef.current.scrollTop;
+
+    // Update the scrollTop property to scroll the element up or down
+    elementRef.current.scrollTop = scrollTop + event.deltaY;
+  }
 
   return (
     <div className="emailList">
@@ -72,173 +93,31 @@ function EmailList() {
         <Section Icon={People} title="Social" color="#1A73E8" />
         <Section Icon={LocalOffer} title="Promotions" color="green" />
       </div>
-      <div className="emailList__list">
-        {emails?.map(({ id, To, subject, message, timestamp }) => (
+      <div className="emailList__list--wrapper">
+        <div ref={elementRef} className="emailList__list">
+          {emails?.map(({ id, To, subject, message, timestamp }) => (
+            <EmailRow
+              id={id}
+              key={id}
+              title={To}
+              subject={subject}
+              message={message}
+              time={new Date(timestamp?.seconds * 1000).toUTCString()}
+            />
+          ))}
           <EmailRow
-            id={id}
-            key={id}
-            title={To}
-            subject={subject}
-            message={message}
-            time={new Date(timestamp?.seconds * 1000).toUTCString()}
+            title="hi"
+            subject="go away"
+            message="halloo bioysx"
+            time="10px"
           />
-        ))}
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
-        <EmailRow 
-          title='hi'
-          subject='go away'
-          message='halloo bioysx'
-          time='10px'
-        />
+          <EmailRow
+            title="hi"
+            subject="go away"
+            message="halloo bioysx"
+            time="10px"
+          />
+        </div>
       </div>
     </div>
   );
