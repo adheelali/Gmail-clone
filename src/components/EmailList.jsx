@@ -15,54 +15,26 @@ import { LocalOffer } from "@mui/icons-material";
 import EmailRow from "./UI/EmailRow";
 
 import { db } from "../firebase/init";
-import { getDocs, collection, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  orderBy,
+  query,
+  onSnapshot,
+} from "firebase/firestore";
 
-//how to scroll the overflowing y-axis without the website scrolling   change this code to react
 
 function EmailList() {
   const [emails, setEmails] = useState([]);
   const elementRef = useRef(null);
 
   useEffect(() => {
-    async function getAllEmails() {
-      const emailRef = collection(db, "emails");
-      const q = query(emailRef, orderBy("timestamp", "desc"));
-      const querySnapshot = await getDocs(q);
-      const email = [];
-      querySnapshot.forEach((doc) => {
-        email.push({
-          ...doc.data(),
-          id: doc.id,
-        });
-      });
-      setEmails(email);
-      console.log(email);
-    }
-    getAllEmails();
-
-    // Get the element from the ref
-    const element = elementRef.current;
-
-    // Set the overflow-y property to scroll
-    element.style.overflowY = "scroll";
-
-    // Add an event listener for the mousewheel event
-    element.addEventListener("mousewheel", handleMouseWheel);
-
-    // Return a cleanup function to remove the event listener
-    return () => element.removeEventListener("mousewheel", handleMouseWheel);
-  }, []);
-
-  function handleMouseWheel(event) {
-    // Prevent the default scroll behavior of the page
-    event.preventDefault();
-
-    // Get the current scroll position of the element
-    const scrollTop = elementRef.current.scrollTop;
-
-    // Update the scrollTop property to scroll the element up or down
-    elementRef.current.scrollTop = scrollTop + event.deltaY;
-  }
+    onSnapshot(
+      query(collection(db, "emails"), orderBy("timestamp", "desc")),
+      (snapshot) => {
+        setEmails(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      }
+    );
+  }, [emails]);
 
   return (
     <div className="emailList">
