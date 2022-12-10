@@ -2,12 +2,26 @@ import React from "react";
 import "./header.css";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Avatar, IconButton } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 import { ArrowDropDown } from "@mui/icons-material";
-import AppsIcon from '@mui/icons-material/Apps';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import AppsIcon from "@mui/icons-material/Apps";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "./features/userSlice";
+import { auth } from "./firebase/init";
 
 function Header() {
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    auth.signOut()
+      .then(() => {
+        dispatch(logout());
+      })
+      .catch((error) => alert(error.message));
+  };
+
   return (
     <header>
       <div className="header__left">
@@ -21,8 +35,8 @@ function Header() {
       </div>
       <div className="header__middle">
         <SearchIcon />
-        <input type="text" placeholder="search mail"/>
-        <ArrowDropDown className="header__inputCaret"/>
+        <input type="text" placeholder="search mail" />
+        <ArrowDropDown className="header__inputCaret" />
       </div>
       <div className="header__right">
         <IconButton>
@@ -31,7 +45,10 @@ function Header() {
         <IconButton>
           <NotificationsIcon />
         </IconButton>
-        <Avatar />
+        <div className="signOut">
+          <Avatar onClick={signOut} src={user?.photoURL} />
+          <div className="signOut-text">SignOut</div>
+        </div>
       </div>
     </header>
   );
