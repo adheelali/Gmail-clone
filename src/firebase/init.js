@@ -6,12 +6,12 @@ import { getAnalytics } from "firebase/analytics";
 import { GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAxuZLfRcvW6jpeaBCqKM4MSVRs2-tb9y4",
-  authDomain: "clone-7ad23.firebaseapp.com",
-  projectId: "clone-7ad23",
-  storageBucket: "clone-7ad23.appspot.com",
-  messagingSenderId: "338134547110",
-  appId: "1:338134547110:web:d82e457f5053674e925267"
+  apiKey: "AIzaSyATNTfsNd-D-VRrPzcjcvaGABMz8ug5hKE",
+  authDomain: "clone-dde0b.firebaseapp.com",
+  projectId: "clone-dde0b",
+  storageBucket: "clone-dde0b.appspot.com",
+  messagingSenderId: "53245204144",
+  appId: "1:53245204144:web:35b1ca37242f4b4acc4d75"
 };
 
 const app = initializeApp(firebaseConfig);
